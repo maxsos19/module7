@@ -1,0 +1,209 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace _7._7.Itogi
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Number num = new Number();
+            
+            Delivery home = new HomeDelivery();
+
+            Delivery pick = new PickPointDelivery();
+
+            Delivery shop = new ShopDelivery();
+
+            Console.WriteLine("Укажите адрес, куда нужно достваить заказ ");
+            home.Address();
+            HomeDelivery cou = new HomeDelivery();
+            cou.Cour();
+            num.PrintNumbers();
+
+
+            Console.WriteLine();
+
+            Console.WriteLine("Доставка осущевляется самовывозом");
+            pick.Address();
+            
+
+            Console.WriteLine();
+
+            Console.WriteLine("Доставка в розничный магазин");
+            shop.Address();
+            num.PrintNumbers();
+
+
+            Delivery1 delivery = new Delivery1();
+            delivery.Cost = 100000;
+
+            Console.WriteLine("Стоимость доставки: " + delivery.Cost);
+            Console.ReadKey();
+        }
+    }
+    abstract class Delivery
+    {
+        public abstract void Address();
+    }
+
+    class HomeDelivery : Delivery
+    {
+        private int NumberCour = 8584954;
+        
+
+        public void Cour()
+        {
+           
+            List<Couriers> people = new List<Couriers>();
+
+            people.Add(new Couriers("Петров"));
+            people.Add(new Couriers("Бубылдыч"));
+            people.Add(new Couriers("Папич"));
+            people.Add(new Couriers("Курсед"));
+
+            Random rand = new Random();
+
+            int i = rand.Next(0, 3);
+            Console.WriteLine("Ваш заказ доствит курьер: {0}", people[i].name);
+            Console.WriteLine($"Номер курьера: {NumberCour}");
+        }
+        public override void Address()
+        {
+            string Add;
+            Console.WriteLine("Введите ваш адрес");
+            Add = Console.ReadLine();
+            Console.WriteLine("Ваш адесс: {0}", Add);
+        
+       
+        
+            List<Transport> Tr = new List<Transport>();
+
+            Tr.Add(new Transport("Cамокат"));
+            Tr.Add(new Transport("Велосипед"));
+            Tr.Add(new Transport("Мотоцикл"));
+            Tr.Add(new Transport("Машина"));
+
+            Random rand1 = new Random();
+
+            int it1 = rand1.Next(0, 3);
+
+
+            Console.WriteLine("Возможный транспорт: {0}", Tr[it1].transport);
+        }
+
+
+
+        /* ... */
+    }
+
+    class PickPointDelivery : Delivery
+    {
+        
+        
+
+        public override void Address()
+        {
+
+            Console.WriteLine("Адрес откуда забрать заказ: г. Тамбов, ул Свободная, дом 16А ");
+
+        }
+        /* ... */
+    }
+
+    class ShopDelivery : Delivery
+    {
+        private int NumberCour = 8584954;
+        public override void Address()
+        {
+            string Add;
+            Console.WriteLine("Укажите адрес розничного магазина");
+            Add = Console.ReadLine();
+            Console.WriteLine("Адрес розничного магазина: {0}", Add);
+            Console.WriteLine($"Номер курьера: {NumberCour}");
+
+        }
+        /* ... */
+    }
+
+    class Order<TDelivery,TStruct> where TDelivery : Delivery
+    {
+        public TDelivery Delivery;
+
+        public int Number;
+
+        public string Description;
+
+       
+
+        // ... Другие поля 
+    }
+    class Couriers
+    {
+        public string name;
+
+        public Couriers(string name)
+        {
+            this.name = name;
+        }
+
+    }
+    class Transport
+    {
+        public string transport;
+        public Transport(string transport)
+        {
+            this.transport = transport;
+        }
+    }
+    class Number
+    {
+        private readonly int NumHot = 868756;
+
+        public string MyNumber;
+
+        
+
+        
+
+        
+
+        public void PrintNumbers()
+        {
+            
+
+            Console.WriteLine($"Номер горячей линии: {NumHot}");
+            
+            Console.WriteLine("Введите свой номер телефона");
+            MyNumber = Convert.ToString(Console.ReadLine());
+            Console.WriteLine("Ваш номер телефона: {0}", MyNumber);
+        }
+        
+
+
+
+    }
+    public class Delivery1
+    {
+        private double _cost;
+
+        public double Cost
+        {
+            get { return _cost; }
+            set
+            {
+                if (value > 0)
+                {
+                    _cost = value;
+                }
+                else
+                {
+                    Console.WriteLine("Ошибка: стоимость должна быть больше 0");
+                }
+            }
+        }
+    }
+}
